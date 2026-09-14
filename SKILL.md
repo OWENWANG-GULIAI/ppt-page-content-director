@@ -1,46 +1,42 @@
 ---
-name: ppt-page-image-director
-description: Use when a user requests PPT页面图片、幻灯片页面图、课程PPT生图，或希望把已有内容整理为逐页图片方案，尤其涉及数据、流程、理论、架构、培训、咨询或 GULIAI 品牌表达；不用于交付可编辑 PPTX。
+name: ppt-page-content-director
+description: Use when users need course, training, consulting, reporting, or sales material broken into a coherent PPT page-by-page content plan, especially when deciding what belongs on each page without making page-layout or image-generation decisions.
 ---
 
-# PPT Page Image Director
+# PPT 逐页内容编导
 
-## 核心原则
+将原始材料编排成可以直接交给视觉设计 Skill 的 PPT 逐页内容包。核心是让每页回答一个清楚的问题、让整套页面形成理解路径；不设计版式、不指定图形结构、不生成页面图片。
 
-先理解内容关系，再决定页数、页面边界和视觉结构。目标是“高信息密度＋低理解负担”。一页一个核心问题，不等于一页只放一个信息点；能够共同回答同一个问题、形成一个认知闭环的内容，应优先聚合在同一页。
+## 工作边界
 
-事实、数字、名称、专有术语和用户原话不得擅改。数字、单位、年份和专有名词保留原字符串。可由原文直接计数或计算的信息标为 `Derived` 并保留推导依据；推断必须标明为推断，不得为了画面完整而补造结论、案例、日期、客户或 Logo。
+- **本 Skill 决定**：叙事顺序、页数建议、内容聚合或拆分、每页核心信息、必显事实与内容覆盖。
+- **本 Skill 不决定**：页面构图、流程图/矩阵/卡片等视觉结构、字体、色彩、Logo、素材、提示词和图片生成。
+- **下游交接**：需要最终图片时，将本 Skill 的 `pages` 内容包原样交给 `guliai-visual-design`。下游可在不改写 `must_preserve` 的前提下自行决定视觉表达。
+- 不交付可编辑 `.pptx`。
 
 ## 工作流
 
-1. 建立 `PptBrief`：用途、受众、场景、页数或时长、画幅、风格、品牌、必显内容、输出模式和事实约束。信息足够时直接工作；只询问会实质改变结果的缺失项。
-2. 将原文拆成内容原子并做覆盖清单。按“同一问题、同一关系、同一理解动作”聚合；按“多个结论、跨场景、无法一次读懂或图形容量超限”拆页。详见 [内容分解](references/content-decomposition.md)。
-3. 为数据、流程、理论、架构、案例和行动内容使用专门分析器，不把所有内容都当作普通要点。
-4. 为整套内容建立 `DeckPlan`，为每页建立 `PagePlan`，再按主关系选择一个主结构。详见 [结构选择](references/structure-selection.md) 与 [页面规划](references/page-planning-and-prompts.md)。
-5. 严格遵守用户选择的输出模式：仅方案、生成指定页、或生成全部页面。只有用户要求实际生图时，才调用 `imagegen` Skill；不要用不存在的本地脚本代替。
-6. 实际生成后逐页检查事实、文字、裁切、层级、对比度、品牌和跨页一致性。详见 [生成与质量](references/generation-and-quality.md)。
+1. 建立内容简报：用途、受众、讲解或阅读场景、材料范围、页数约束、必显内容与事实边界。详见[需求与事实边界](references/brief-and-content-contract.md)。
+2. 将材料拆成内容原子，识别关系和理解依赖，据此决定聚合、拆页与叙事顺序；关系只用于内容编排，不转写成页面结构。详见[内容分解](references/content-decomposition.md)。
+3. 输出总叙事、`pages`、内容覆盖表和事实边界。`pages` 必须符合[逐页内容包](references/page-content-package.md)。
+4. 若用户需要页面图片，将完整内容包交给 `guliai-visual-design`；本 Skill 到此结束，不补充视觉方案。
 
-## 密度与结构判断
+## 内容判断
 
-- 低密度页用于封面、章节、单一结论和情绪建立。
-- 中密度页用于 3–6 个并列模块、单一流程或一组数据解释。
-- 高密度页用于完整能力模型、架构、方法论、角色流程和综合仪表盘；允许 2–3 个信息层级，但必须有清晰分区、阅读顺序和视觉锚点。
-- 不以固定字数、固定四层结构、固定留白比例或固定金句作为硬规则。
-- 标题可以是主题句，也可以是有证据支撑的结论句；不得强行“每页一句观点”。
+- 一页一个核心问题，不等于一页只有一个信息点。共同回答同一问题、需要同时比较或形成闭环的内容优先放在同页。
+- 当一页包含多个独立结论、跨越不同理解阶段，或文字已无法扫读时拆页；必要时采用“总览页＋后续展开页”。
+- 数据、流程、理论、架构、案例和行动材料都先核实其事实关系；不得为了完整而补造数字、案例、角色、日期、客户或结论。
+- 标题可用有证据支持的结论句；证据不足时使用中性主题句。
 
-## 参考路由
+## 输出要求
 
-- 需求、事实边界、交互和输出模式：[需求与内容契约](references/brief-and-content-contract.md)
-- 聚合、拆页、密度和专门内容分析：[内容分解](references/content-decomposition.md)
-- 关系到图形结构的映射：[结构选择](references/structure-selection.md)
-- `PagePlan`、页面提示词和高密度示例：[页面规划](references/page-planning-and-prompts.md)
-- GULIAI 预设、Logo 和人物规则：[GULIAI 品牌](references/guliai-brand-guidelines.md)
-- 生图、检查、重做和交付：[生成与质量](references/generation-and-quality.md)
+- 默认输出逐页内容包，不输出提示词、页面布局、视觉系统或图片。
+- 数字、单位、年份、人名、机构、产品、专有术语和用户引号内原话必须原样保留。
+- 缺失事实写作 `[待提供：字段名]`；不要用虚构内容补齐。
+- 用户指定固定页数时在该约束内编排；未指定时给出推荐页数和理由。
 
 ## 禁止做法
 
-- 不重复询问用户已经给出的信息。
-- 不因模板偏好拆散一个完整主题，也不因追求“充实”把无关主题硬塞一页。
-- 不强制渐变、深蓝科技风、金色金句、像素坐标或装饰性底栏。
-- 不承诺图像模型能像素级复现 Logo 或小字号文字；要求品牌精确时使用官方资产后期叠加。
-- 不把静态页面图片描述为可编辑 PPTX。
+- 不把“流程、矩阵、能力模型”等内容关系强制翻译成指定图形或构图。
+- 不输出字体、色板、标题轨道、卡片、Logo、安全区、素材计划或生图提示词。
+- 不把静态页面图片说成可编辑 PPTX，也不自行生成页面图片。
