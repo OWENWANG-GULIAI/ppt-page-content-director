@@ -31,10 +31,10 @@
 
 ## 快速开始
 
-仓库地址沿用早期名称以保持现有链接稳定；安装目录与调用名已更新为 `ppt-page-content-director`。
+仓库名称、安装目录与调用名均为 `ppt-page-content-director`。
 
 ```bash
-git clone https://github.com/OWENWANG-GULIAI/ppt-page-image-director.git ~/.codex/skills/ppt-page-content-director
+git clone https://github.com/OWENWANG-GULIAI/ppt-page-content-director.git ~/.codex/skills/ppt-page-content-director
 ```
 
 ```text
@@ -111,7 +111,7 @@ git clone https://github.com/OWENWANG-GULIAI/ppt-page-image-director.git ~/.code
 
 ## 当前版本边界
 
-- 当前版本名称为 `ppt-page-content-director`，但 GitHub 仓库 URL 保留历史名称；
+- 当前版本名称、GitHub 仓库名称与调用名均为 `ppt-page-content-director`；
 - 不生成页面图片，也不替代 `guliai-visual-design` 的品牌与图像生成职责；
 - 不生成可编辑 PPTX。
 
